@@ -24,11 +24,11 @@ export default function Navbar() {
       <nav>
         <Flex
           sx={{
-            maxW: '736px',
+            maxW: '620px',
             margin: 'auto',
             width: '100%',
             justifyContent: 'space-between',
-            align: 'center',
+            alignItems: 'center',
             py: 3,
             px: {
               base: 4,

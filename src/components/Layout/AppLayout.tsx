@@ -10,7 +10,7 @@ export default function AppLayout() {
                 width: "100%",
                 maxW: {
                     base: "100%",
-                    md: "736px"
+                    md: "620px"
                 }, 
                 margin: "0 auto",
             }}>
@@ -18,7 +18,7 @@ export default function AppLayout() {
             <Box
                 sx={{
                     width: "100%",
-                    maxW: "736px",
+                    maxW: "620px",
                     minH: "100vh",
                     height: "100%",
                     pt: {

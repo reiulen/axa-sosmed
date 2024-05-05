@@ -21,4 +21,11 @@ export const themeChakra = extendTheme({
     heading: `'Poppins', sans-serif`,
     body: `'Poppins', sans-serif`,
   },
+  styles: {
+    global: {
+      "#root": {
+        width: "100%",
+      },
+    },
+  },
 });
