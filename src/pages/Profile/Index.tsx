@@ -1,6 +1,7 @@
+import Skeleton from '@/components/Skeleton/Skeleton'
+import { FetchDetailUserQuery } from '@/services/usersQuery'
 import { avatarName } from '@/utils/helpers/helper'
-import { Box, Flex, Image, Tab, TabList, TabPanel, TabPanels, Tabs, Text } from '@chakra-ui/react'
-import React from 'react'
+import { Box, Flex, Image, Tab, TabList, Tabs, Text } from '@chakra-ui/react'
 import { Link, Outlet, useLocation, useParams } from 'react-router-dom'
 
 type TMenuTabs = {
@@ -8,8 +9,12 @@ type TMenuTabs = {
     link: string
 }
 
+type TParams = {
+    id: string
+}
+
 export default function ProfileIndex() {
-    const params = useParams<{ id: string }>();
+    const params = useParams<TParams>();
     const { id: idUser } = params;
     const MenuTabs: TMenuTabs[] = [
         {
@@ -22,6 +27,14 @@ export default function ProfileIndex() {
         }
     ]
     const location = useLocation();
+
+    const {
+        data: dataDetailUser,
+        isLoading,
+        isPending,
+        isFetching,
+    } = FetchDetailUserQuery(parseInt(idUser ?? '0'), {});
+
     return (
         <Box>
             <Flex
@@ -33,27 +46,47 @@ export default function ProfileIndex() {
                 }}
             >
                 <Box>
-                    <Text sx={{
-                        fontSize: 'xl',
-                        fontWeight: 'bold'
-                    }}>
-                        Reihan Andika AM
-                    </Text>
-                    <Text sx={{
-                        fontSize: 'md',
-                        color: 'gray.600'
-                    }}>
-                        @reihanpraja
-                    </Text>
+                    {
+                        isLoading || isFetching || isPending ? (
+                            <>
+                                <Skeleton width="400px" height="50px" />
+                            </>
+                        ) : (
+                            <>
+                                <Text sx={{
+                                    fontSize: 'xl',
+                                    fontWeight: 'bold'
+                                }}>
+                                    {dataDetailUser?.name ?? '-'}
+                                </Text>
+                                <Text sx={{
+                                    fontSize: 'md',
+                                    color: 'gray.600'
+                                }}>
+                                    @{dataDetailUser?.username ?? '-'}
+                                </Text>
+                            </>
+                        )
+                    }
                 </Box>
                 <Box>
-                    <Image src={avatarName('Dadan')} alt="logo" sx={{
-                        borderRadius: '100%',
-                        md: {
-                            width: '86px',
-                            height: '86px',
-                        },
-                    }} />
+                    {
+                        isLoading || isFetching || isPending ? (
+                            <>
+                                <Skeleton width="80px" height="80px" borderRadius="100%" />
+                            </>
+                        ) : (
+                            <>
+                                <Image src={avatarName(dataDetailUser?.name)} alt="logo" sx={{
+                                    borderRadius: '100%',
+                                    md: {
+                                        width: '86px',
+                                        height: '86px',
+                                    },
+                                }} />
+                            </>
+                        )
+                    }
                 </Box>
             </Flex>
             <Tabs

@@ -2,6 +2,7 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import HomeIndex from "@/pages/Home/Index";
 import AppLayout from "@/components/Layout/AppLayout";
 import ProfileIndex from "@/pages/Profile/Index";
+import ProfilPostinganIndex from "@/pages/Profile/Postingan/Index";
 
 const router = createBrowserRouter([
   {
@@ -17,7 +18,7 @@ const router = createBrowserRouter([
         children: [
           {
             path: "",
-            element: <h2>Postingan</h2>,
+            element: <ProfilPostinganIndex />,
           },
           {
             path: "album",

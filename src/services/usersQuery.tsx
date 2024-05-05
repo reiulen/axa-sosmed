@@ -36,6 +36,32 @@ export const FetchListUserQuery = (query: Query) => {
   return resQuery;
 };
 
+export const FetchDetailUserQuery = (id: number, query?: Query) => {
+  const toast = useToast()
+  const link = buildUrl({
+    baseUrl: `users/${id}`,
+    query: query,
+  });
+
+  const resQuery = useQuery({
+    queryKey: [link],
+    queryFn: mockQuery,
+  });
+
+  if (resQuery?.isError) {
+    const err = resQuery?.error as AxiosError<{ message: string }>;
+    toast({
+      title: "Error",
+      description: err?.response?.data?.message,
+      status: "error",
+      duration: 5000,
+      isClosable: true,
+      position: 'top-right'
+    })
+  }
+  return resQuery;
+};
+
 type Error = {
   [key: string]: string[];
 };
