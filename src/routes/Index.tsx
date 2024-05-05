@@ -1,6 +1,7 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import HomeIndex from "@/pages/Home/Index";
 import AppLayout from "@/components/Layout/AppLayout";
+import ProfileIndex from "@/pages/Profile/Index";
 
 const router = createBrowserRouter([
   {
@@ -9,6 +10,20 @@ const router = createBrowserRouter([
       {
         path: "",
         element: <HomeIndex />,
+      },
+      {
+        path: ":id",
+        Component: ProfileIndex,
+        children: [
+          {
+            path: "",
+            element: <h2>Postingan</h2>,
+          },
+          {
+            path: "album",
+            element: <h2>Album</h2>,
+          },
+        ],
       },
     ],
   },

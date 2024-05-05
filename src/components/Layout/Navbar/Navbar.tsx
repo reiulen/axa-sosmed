@@ -1,9 +1,12 @@
 import React from 'react'
-import { Box, Flex, Image } from '@chakra-ui/react'
+import { Box, Button, Flex, Icon, Image } from '@chakra-ui/react'
 import { LOGO_URL } from '@/utils/constants/asset.constant'
-import { Link } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { FaArrowLeftLong } from 'react-icons/fa6'
 
 export default function Navbar() {
+  const Navigate = useNavigate();
+  const location = useLocation().pathname
   return (
     <Box as="nav"
       sx={{
@@ -18,7 +21,6 @@ export default function Navbar() {
         zIndex: 9999,
         borderBottomWidth: "1px",
         borderBottomColor: "secondary.200",
-
       }}
     >
       <nav>
@@ -41,6 +43,25 @@ export default function Navbar() {
           </Box>
           <Box ml={'auto'}>
             {/* Nav */}
+            {
+              location !== '/' && (
+                <Box
+                  as='a'
+                  role='button'
+                  sx={{
+                    fontSize: 'sm',
+                    fontWeight: 'semibold',
+                    color: 'secondary.500',
+                    textDecoration: 'underline',
+                  }}
+                  onClick={() => {
+                    Navigate(-1)
+                  }}>
+                  <Icon as={FaArrowLeftLong} mr={2} verticalAlign={'middle'} />
+                  Kembali
+                </Box>
+              )
+            }
           </Box>
         </Flex>
       </nav>
