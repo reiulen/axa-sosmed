@@ -12,3 +12,7 @@ export const buildUrl = ({ baseUrl, query }: QueryParams) => {
 
     return `${baseUrl}?${queryString}`;
 };
+
+export const avatarName = (name: string) => {
+    return `https://ui-avatars.com/api/?name=${name}&color=7F9CF5&background=EBF4FF`
+}

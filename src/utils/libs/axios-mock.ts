@@ -1,5 +1,5 @@
 import axios from "axios";
-const baseURL = process.env.VITE_API_URL;
+const baseURL = import.meta.env.VITE_API_URL;
 
 export const apiMock = axios.create({
   baseURL,

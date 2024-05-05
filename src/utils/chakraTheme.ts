@@ -13,6 +13,9 @@ const colors = {
     800: "#112e66",
     900: "#001133",
   },
+  secondary: {
+    200: "rgb(239, 243, 244)",
+  },
 };
 
 export const themeChakra = extendTheme({
