@@ -1,6 +1,7 @@
 import { Flex, Box, Text, Icon, Image, Button } from '@chakra-ui/react'
 import { FaGlobeAsia, FaRegEnvelope } from 'react-icons/fa'
 import { avatarName } from '@/utils/helpers/helper'
+import { Link } from 'react-router-dom'
 
 interface ICardsUserItem {
     user: TUser
@@ -125,7 +126,7 @@ export default function CardUserItem({
             <Box sx={{
                 mt: 'auto'
             }}>
-                <Button sx={{
+                <Button as={Link} to={`/${user.id}`} sx={{
                     py: 4,
                 }} colorScheme='blue' size='sm' rounded="md" w="full">
                     Lihat Profil

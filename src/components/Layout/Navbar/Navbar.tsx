@@ -1,6 +1,7 @@
 import React from 'react'
 import { Box, Flex, Image } from '@chakra-ui/react'
 import { LOGO_URL } from '@/utils/constants/asset.constant'
+import { Link } from 'react-router-dom'
 
 export default function Navbar() {
   return (
@@ -35,7 +36,7 @@ export default function Navbar() {
             },
           }}
         >
-          <Box mr={'auto'}>
+          <Box as={Link} to={'/'} mr={'auto'}>
             <Image src={LOGO_URL} alt="logo" height="35px" />
           </Box>
           <Box ml={'auto'}>
