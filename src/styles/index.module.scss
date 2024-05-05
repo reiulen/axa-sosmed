@@ -1,0 +1,79 @@
+@import 'variables.scss';
+
+.asi {
+  display: inline-block;
+  mask-size: cover;
+  width: 23px;
+  height: 23px;
+}
+
+@each $index, $url in $icons {
+  .asi__#{$index} {
+    -webkit-mask: url($url);
+    mask: url($url);
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-size: contain;
+    mask-size: contain;
+    -webkit-mask-position: center;
+    mask-position: center;
+  }
+}
+
+.as_input_control__search--end {
+    width: 100%;
+    min-height: 25px;
+    border: 1px solid #d1d5da;
+    border-radius: 7px;
+    padding: 6px 45px 6px 15px;
+    background: url("../assets/icons/search-icon-normal.svg") no-repeat;
+    background-color: rgb(250, 250, 250);
+    background-size: 16px;
+    background-position: calc(100% - 16px) center;
+    &::before {
+      content: "";
+      position: absolute;
+      border: 1px solid;
+    }
+    &:focus-within {
+      border: 1px solid #c4c4c4 !important;
+      outline: none;
+      border-color: rgb(9, 60, 101);
+      box-shadow: rgb(220, 239, 255) 0px 0px 0px 0.2rem;
+    }
+  
+    &::placeholder {
+      font-size: 13px;
+      color: #9f9f9f;
+      font-weight: 600;
+    }
+}
+
+.as_input_control__search--start {
+  width: 100%;
+  min-height: 25px;
+  border: 1px solid #d1d5da;
+  border-radius: 7px;
+  padding: 6px 15px 6px 35px;
+  background: url("../assets/icons/search-icon-normal.svg") no-repeat;
+  background-color: rgb(250, 250, 250);
+  background-size: 16px;
+  background-position: 10px center;
+  &::before {
+    content: "";
+    position: absolute;
+    border: 1px solid;
+  }
+  &:focus-within {
+    border: 1px solid #c4c4c4 !important;
+    outline: none;
+    border-color: rgb(9, 60, 101);
+    box-shadow: rgb(220, 239, 255) 0px 0px 0px 0.2rem;
+  }
+
+  &::placeholder {
+    font-size: 13px;
+    color: #9f9f9f;
+    font-weight: 600;
+  }
+}
