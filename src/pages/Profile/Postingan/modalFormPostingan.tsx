@@ -2,8 +2,10 @@ import { avatarName } from '@/utils/helpers/helper'
 import { Box, Button, FormControl, FormErrorMessage, Image, Input, Modal, ModalBody, ModalContent, ModalOverlay, Text, Textarea, useToast } from '@chakra-ui/react'
 import { FaTimes } from 'react-icons/fa'
 import { SubmitHandler, useForm } from 'react-hook-form'
-import { MutationAddPosts } from '@/services/usePostsQuery'
 import { useParams } from 'react-router-dom'
+import { storePost } from '@/services/api/endpoint/posts/store'
+import { usePosts } from '@/stores/posts/store'
+import { useState } from 'react'
 
 interface IModalFormPostingan {
     isOpenPostForm: boolean
@@ -16,7 +18,9 @@ export default function ModalFormPostingan({
 }: IModalFormPostingan) {
     const params = useParams<{ id: string }>();
     const { id: idUser } = params;
-    const toast = useToast()
+    const toast = useToast();
+    const {addPost} = usePosts();
+    const [loadingStorePost, setLoadingStorePost] = useState<boolean>(false);
 
     const {
         register,
@@ -26,37 +30,44 @@ export default function ModalFormPostingan({
         formState: { errors },
     } = useForm<TPostForm>();
 
-    const onSubmit: SubmitHandler<TPostForm> = (data) => mutationAdd({
-        ...data,
-        userId: idUser as unknown as number
-    })
-
-    const { mutate: mutationAdd, isPending: isPendigMutation } =
-    MutationAddPosts({
-        onError: (error: any) => {
-            toast({
-                title: "Error",
-                description: error?.response?.data?.message,
-                status: "error",
-                duration: 5000,
-                isClosable: true,
-                position: 'top-right'
+    const onSubmit: SubmitHandler<TPostForm> = async (data) => {
+        setLoadingStorePost(true);
+        try {
+            const payload : TPostForm = {
+                ...data,
+                userId: idUser as unknown as number
+            }
+            const res = await storePost(payload);
+            addPost({
+                title: payload.title,
+                body: payload.body,
+                userId: payload.userId,
+                id: res.id
             })
-        },
-        onSuccess: (data) => {
             toast({
-                title: "Post added successfully.",
-                description: data?.message,
+                title: "Berhasil",
+                description: "Postingan berhasil dibuat",
                 status: "success",
                 duration: 5000,
                 isClosable: true,
                 position: 'top-right'
             })
-            reset()
-            clearErrors()
+            reset();
             onCloseFormPost();
+            clearErrors();
+        } catch (error: any) {
+            toast({
+                title: "Error",
+                description: error?.response?.data?.message || "Terjadi kesalahan, silahkan coba lagi",
+                status: "error",
+                duration: 5000,
+                isClosable: true,
+                position: 'top-right'
+            })
         }
-    })
+        setLoadingStorePost(false);
+    }
+
 
     return (
         <Modal isOpen={isOpenPostForm} onClose={onCloseFormPost} size={'xl'}>
@@ -159,8 +170,8 @@ export default function ModalFormPostingan({
                                 mb: 4
                             }}>
                                 <Button
-                                    isLoading={isPendigMutation}
-                                    isDisabled={isPendigMutation || Object.keys(errors).length !== 0}
+                                    isLoading={loadingStorePost}
+                                    isDisabled={loadingStorePost || Object.keys(errors).length !== 0}
                                     type='submit'
                                     colorScheme='blue'
                                     size={'sm'}

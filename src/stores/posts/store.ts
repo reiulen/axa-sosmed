@@ -1,19 +1,35 @@
+import { getListPost } from "@/services/api/endpoint/posts";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 
 interface ListPostsState {
     posts: TPosts[];
+    loading: boolean;
+    refreshing: boolean;
+    isError: boolean;
+    addAllPosts: (posts: TPosts[]) => void;
     addPost: (post: TPosts) => void;
     deletePost: (id: number) => void;
     getPosts: (userId: number) => void;
 }
 
-export const useListPosts = create<ListPostsState>()(
+export const usePosts = create<ListPostsState>()(
     persist(
         (set, get) => ({
             posts: [],
-            getPosts: (userId: number) => {
-                // const posts = 
+            loading: false,
+            refreshing: false,
+            isError: false,
+            getPosts: async (userId: number) => {
+                set({ loading: true });
+                try {
+                    if (get().posts.length > 0) return;
+                    const res: TPosts[] = await getListPost(userId);
+                    set({ posts: res });
+                } catch (error) {
+                    set({ isError: true });
+                }
+                set({ loading: false });
             },
             addAllPosts: (posts: TPosts[]) => {
                 set({ posts });
@@ -21,10 +37,11 @@ export const useListPosts = create<ListPostsState>()(
             addPost: (post: TPosts) => {
                 const id = Math.max(...get().posts.map((post) => post.id), 0) + 1;
                 set((state) => ({
-                    posts: [...state.posts, {
+                    posts: [{
                         ...post,
                         id,
-                    }]
+                    },
+                    ...state.posts]
                 }));
             },
             deletePost: (id: number) => {

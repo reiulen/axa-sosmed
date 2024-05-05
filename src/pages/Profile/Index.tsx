@@ -1,7 +1,9 @@
 import Skeleton from '@/components/Skeleton/Skeleton'
 import { FetchDetailUserQuery } from '@/services/usersQuery'
+import { useDetailUser } from '@/stores/users/detail'
 import { avatarName } from '@/utils/helpers/helper'
 import { Box, Flex, Image, Tab, TabList, Tabs, Text } from '@chakra-ui/react'
+import { useEffect } from 'react'
 import { Link, Outlet, useLocation, useParams } from 'react-router-dom'
 
 type TMenuTabs = {
@@ -16,6 +18,7 @@ type TParams = {
 export default function ProfileIndex() {
     const params = useParams<TParams>();
     const { id: idUser } = params;
+    console.log('idUser', idUser);
     const MenuTabs: TMenuTabs[] = [
         {
             title: 'Postingan',
@@ -28,12 +31,11 @@ export default function ProfileIndex() {
     ]
     const location = useLocation();
 
-    const {
-        data: dataDetailUser,
-        isLoading,
-        isPending,
-        isFetching,
-    } = FetchDetailUserQuery(parseInt(idUser ?? '0'), {});
+    const {user, loading, getDetailUser} = useDetailUser();
+
+    useEffect(() => {
+        getDetailUser(idUser as unknown as number);
+    }, [params?.id]);
 
     return (
         <Box>
@@ -47,7 +49,7 @@ export default function ProfileIndex() {
             >
                 <Box>
                     {
-                        isLoading || isFetching || isPending ? (
+                        loading ? (
                             <>
                                 <Skeleton width="400px" height="50px" />
                             </>
@@ -57,13 +59,13 @@ export default function ProfileIndex() {
                                     fontSize: 'xl',
                                     fontWeight: 'bold'
                                 }}>
-                                    {dataDetailUser?.name ?? '-'}
+                                    {user?.name ?? '-'}
                                 </Text>
                                 <Text sx={{
                                     fontSize: 'md',
                                     color: 'gray.600'
                                 }}>
-                                    @{dataDetailUser?.username ?? '-'}
+                                    @{user?.username ?? '-'}
                                 </Text>
                             </>
                         )
@@ -71,13 +73,13 @@ export default function ProfileIndex() {
                 </Box>
                 <Box>
                     {
-                        isLoading || isFetching || isPending ? (
+                        loading ? (
                             <>
                                 <Skeleton width="80px" height="80px" borderRadius="100%" />
                             </>
                         ) : (
                             <>
-                                <Image src={avatarName(dataDetailUser?.name)} alt="logo" sx={{
+                                <Image src={avatarName(user?.name)} alt="logo" sx={{
                                     borderRadius: '100%',
                                     md: {
                                         width: '86px',
