@@ -40,7 +40,7 @@ export const FetchDetailUserQuery = (id: number, query?: Query) => {
   const toast = useToast()
   const link = buildUrl({
     baseUrl: `users/${id}`,
-    query: query,
+    query: query ?? {},
   });
 
   const resQuery = useQuery({

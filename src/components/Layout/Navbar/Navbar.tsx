@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Button, Flex, Icon, Image } from '@chakra-ui/react'
+import { Box, Flex, Icon, Image } from '@chakra-ui/react'
 import { LOGO_URL } from '@/utils/constants/asset.constant'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { FaArrowLeftLong } from 'react-icons/fa6'
@@ -18,7 +18,7 @@ export default function Navbar() {
         right: 0,
         width: "100%",
         verticalAlign: "center",
-        zIndex: 9999,
+        zIndex: 99,
         borderBottomWidth: "1px",
         borderBottomColor: "secondary.200",
       }}
