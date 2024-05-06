@@ -1,13 +1,13 @@
 import { Grid } from '@chakra-ui/react'
-import CardUserItem from './CardUserItem'
 import Skeleton from '../Skeleton/Skeleton'
+import CardAlbumItem from './CardAlbumItem'
 
 interface ICardsUserList {
-    data: TUser[]
+    data: TAlbums[]
     isLoading?: boolean
 }
 
-export default function CardUserList({
+export default function CardAlbumList({
     data,
     isLoading
 }: ICardsUserList) {
@@ -16,17 +16,18 @@ export default function CardUserList({
             (
                 <Grid
                     templateColumns='repeat(2, 1fr)'
+                    mt={4}
                     gap={{
                         base: 2,
-                        md: 4
+                        md: 5
                     }}>
                     {
                         isLoading ?
                             <Skeleton count={10} height='180px' sx={{
                                 borderRadius: 'lg',
                             }} />
-                            : data?.map((user: TUser, index: number) => (
-                                <CardUserItem key={index} user={user} />
+                            : data?.map((album: TAlbums, index: number) => (
+                                <CardAlbumItem key={index} album={album} />
                             ))
                     }
                 </Grid>

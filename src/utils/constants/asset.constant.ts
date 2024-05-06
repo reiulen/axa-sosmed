@@ -1,1 +1,1 @@
-export const LOGO_URL : string = '/src/assets/logo-axa.png';
+export const LOGO_URL : string = '/assets/logo-axa.png';
