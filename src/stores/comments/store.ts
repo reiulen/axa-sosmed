@@ -25,7 +25,7 @@ export const useComments = create<CommentsState>()(
             getComments: async (postId: number) => {
                 set({ loading: true });
                 try {
-                    if (get().comments.filter((comment) => comment.postId === postId).length > 0){
+                    if (get().comments.filter((comment) => comment.postId === parseInt(postId.toString())).length > 0){
                         set({ loading: false });
                         return;
                     }
