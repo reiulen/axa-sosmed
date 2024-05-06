@@ -29,7 +29,7 @@ export default function ProfileIndex() {
     ]
     const location = useLocation();
 
-    const {user, loading, getDetailUser} = useDetailUser();
+    const { user, loading, getDetailUser } = useDetailUser();
 
     useEffect(() => {
         getDetailUser(idUser as unknown as number);
@@ -73,17 +73,21 @@ export default function ProfileIndex() {
                     {
                         loading ? (
                             <>
-                                <Skeleton width="80px" height="80px" borderRadius="100%" />
+                                <Skeleton width="80px" height="80px"
+                                    sx={{
+                                        borderRadius: '100%',
+                                    }} />
                             </>
                         ) : (
                             <>
-                                <Image src={avatarName(user?.name)} alt="logo" sx={{
-                                    borderRadius: '100%',
-                                    md: {
-                                        width: '86px',
-                                        height: '86px',
-                                    },
-                                }} />
+                                <Image src={avatarName(user?.name)} alt="logo"
+                                    sx={{
+                                        borderRadius: '100%',
+                                        md: {
+                                            width: '86px',
+                                            height: '86px',
+                                        },
+                                    }} />
                             </>
                         )
                     }

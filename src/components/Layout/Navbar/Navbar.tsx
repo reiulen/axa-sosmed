@@ -1,4 +1,3 @@
-import React from 'react'
 import { Box, Flex, Icon, Image } from '@chakra-ui/react'
 import { LOGO_URL } from '@/utils/constants/asset.constant'
 import { Link, useLocation, useNavigate } from 'react-router-dom'

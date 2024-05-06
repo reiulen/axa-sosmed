@@ -1,6 +1,6 @@
 import CardPostItem from '@/components/Cards/CardPostItem'
 import { Box, useDisclosure } from '@chakra-ui/react'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import ModalFormPostingan from '../modalFormPostingan'
 import { useParams } from 'react-router-dom';
 import { useDetailUser } from '@/stores/users/detail';

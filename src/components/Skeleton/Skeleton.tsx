@@ -1,4 +1,4 @@
-import { Skeleton as ChakraSkeleton } from '@chakra-ui/react'
+import { ChakraProps, Skeleton as ChakraSkeleton } from '@chakra-ui/react'
 
 interface ISkeletonProps {
     count?: number,
@@ -9,7 +9,9 @@ interface ISkeletonProps {
 export default function Skeleton({
     count,
     ...rest
-}: ISkeletonProps) {
+}: 
+ISkeletonProps & React.ComponentProps<typeof ChakraSkeleton> & ChakraProps
+) {
     if (count && count > 0) {
         return Array.from({ length: count }).map((_, index) => (
             <ChakraSkeleton key={index} {...rest} />

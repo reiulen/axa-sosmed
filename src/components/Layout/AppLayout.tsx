@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import Navbar from './Navbar/Navbar'
-import { Box, Flex } from '@chakra-ui/react'
+import { Box } from '@chakra-ui/react'
 import { Outlet, useLocation } from 'react-router-dom'
 
 export default function AppLayout() {

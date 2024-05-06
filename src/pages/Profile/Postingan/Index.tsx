@@ -1,5 +1,5 @@
 import { avatarName } from '@/utils/helpers/helper'
-import { Box, Button, Flex, Image, Text, useDisclosure } from '@chakra-ui/react'
+import { Box, Button, Image, Text, useDisclosure } from '@chakra-ui/react'
 import ModalFormPostingan from './modalFormPostingan'
 import CardPostList from '@/components/Cards/CardPostList'
 import { usePosts } from '@/stores/posts/store'

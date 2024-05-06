@@ -1,4 +1,3 @@
-import React from 'react'
 import { Box, Flex, Icon, Image, Menu, MenuButton, MenuItem, MenuList, Portal, Text } from '@chakra-ui/react'
 import { avatarName } from '@/utils/helpers/helper'
 import { HiEllipsisHorizontal } from 'react-icons/hi2'
