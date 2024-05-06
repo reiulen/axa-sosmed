@@ -59,7 +59,7 @@ export const useUsers = create<ListUsersState>()(
             }
         }),
         {
-            name: "list-posts-store",
+            name: "list-users-store",
             storage: createJSONStorage(() => localStorage),
         }
     )

@@ -1,17 +1,16 @@
 import { ChakraProvider } from '@chakra-ui/react'
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { themeChakra } from '@/utils/chakraTheme'
 import RouteApps from '@/routes/Index'
+import AlertDialogConfirmation from './components/Alert/AlertDialogConfirmation'
 
 function App() {
   return (
-    <QueryClientProvider client={new QueryClient()}>
-      <ChakraProvider>
-        <ChakraProvider theme={themeChakra}>
-          <RouteApps />
-        </ChakraProvider>
+    <ChakraProvider>
+      <ChakraProvider theme={themeChakra}>
+        <RouteApps />
+        <AlertDialogConfirmation />
       </ChakraProvider>
-    </QueryClientProvider>
+    </ChakraProvider>
   )
 }
 

@@ -3,6 +3,7 @@ import HomeIndex from "@/pages/Home/Index";
 import AppLayout from "@/components/Layout/AppLayout";
 import ProfileIndex from "@/pages/Profile/Index";
 import ProfilPostinganIndex from "@/pages/Profile/Postingan/Index";
+import DetailPostinganIndex from "@/pages/Profile/Postingan/Detail/Index";
 
 const router = createBrowserRouter([
   {
@@ -25,6 +26,10 @@ const router = createBrowserRouter([
             element: <h2>Album</h2>,
           },
         ],
+      },
+      {
+        path: ":user_id/post/:post_id",
+        element: <DetailPostinganIndex />,
       },
     ],
   },

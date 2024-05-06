@@ -1,9 +1,13 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Navbar from './Navbar/Navbar'
 import { Box, Flex } from '@chakra-ui/react'
-import { Outlet } from 'react-router-dom'
+import { Outlet, useLocation } from 'react-router-dom'
 
 export default function AppLayout() {
+    const location = useLocation();
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, [location.pathname])
     return (
         <Box minH="100vh"
             sx={{

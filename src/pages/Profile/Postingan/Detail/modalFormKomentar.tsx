@@ -1,31 +1,30 @@
 import { avatarName } from '@/utils/helpers/helper'
-import { Box, Button, FormControl, FormErrorMessage, Image, Input, Modal, ModalBody, ModalContent, ModalOverlay, Text, Textarea, useToast } from '@chakra-ui/react'
+import { Box, Button, FormControl, FormErrorMessage, Image, Modal, ModalBody, ModalContent, ModalOverlay, Text, Textarea, useToast } from '@chakra-ui/react'
 import { FaTimes } from 'react-icons/fa'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { useParams } from 'react-router-dom'
-import { editPost, storePost } from '@/services/api/endpoint/posts/store'
-import { usePosts } from '@/stores/posts/store'
 import { useEffect, useState } from 'react'
 import { useDetailPost } from '@/stores/posts/detail'
+import { useComments } from '@/stores/comments/store'
 import { useDetailUser } from '@/stores/users/detail'
 
-interface IModalFormPostingan {
-    isOpenPostForm: boolean
-    onCloseFormPost: () => void
-    dataEdit?: TPostForm
+interface IModalFormKomentar {
+    isOpenComentForm: boolean
+    onCloseFormComment: () => void
+    dataEdit?: TCommentForm
     setDataEdit?: React.Dispatch<React.SetStateAction<any>>
 }
 
-export default function ModalFormPostingan({
-    isOpenPostForm,
-    onCloseFormPost,
+export default function ModalFormKomentar({
+    isOpenComentForm,
+    onCloseFormComment,
     dataEdit,
     setDataEdit
-}: IModalFormPostingan) {
+}: IModalFormKomentar) {
     const params = useParams<{ id: string, post_id: string }>();
-    const { id: idUser } = params;
+    const { post_id } = params;
     const toast = useToast();
-    const {addPost, editPost: editPostStore} = usePosts();
+    const {addComment, editComment: editCommentStore} = useComments();
     const [loadingStorePost, setLoadingStorePost] = useState<boolean>(false);
     const {refreshDetailPost} = useDetailPost();
     const {user} = useDetailUser();
@@ -36,52 +35,47 @@ export default function ModalFormPostingan({
         clearErrors,
         reset,
         formState: { errors },
-    } = useForm<TPostForm>();
+    } = useForm<TCommentForm>();
 
     useEffect(() => {
         if (dataEdit?.id) {
             reset({
-                title: dataEdit?.title,
                 body: dataEdit?.body,
             })
         }
     }, [dataEdit]);
 
-    const onSubmit: SubmitHandler<TPostForm> = async (data) => {
+    const onSubmit: SubmitHandler<TCommentForm> = async (data) => {
         setLoadingStorePost(true);
         try {
-            const payload : TPostForm = {
-                ...data,
-                userId: idUser as unknown as number
-            }
+            const payload : TCommentForm = data;
             if(dataEdit?.id){
-                await editPost( dataEdit?.id, payload);
-                editPostStore(dataEdit?.id,{
-                    title: payload.title,
+                editCommentStore(dataEdit?.id,{
                     body: payload.body,
-                    userId: payload.userId,
+                    name: user?.name,
+                    email: user?.email,
+                    postId: post_id as unknown as number,
                 })
                 refreshDetailPost();
             } else {
-                const res = await storePost(payload);
-                addPost({
-                    title: payload.title,
+                addComment({
                     body: payload.body,
-                    userId: payload.userId,
-                    id: res.id
+                    name: user?.name,
+                    email: user?.email,
+                    postId: (post_id as unknown as number)?? 0,
                 })
             }
 
             toast({
                 title: "Berhasil",
-                description: "Postingan berhasil disimpan",
+                description: "Komentar berhasil disimpan",
                 status: "success",
                 duration: 5000,
                 isClosable: true,
                 position: 'top-right'
             })
             reset({});
-            onCloseFormPost();
+            onCloseFormComment();
             clearErrors();
         } catch (error: any) {
             toast({
@@ -98,12 +92,11 @@ export default function ModalFormPostingan({
 
 
     return (
-        <Modal isOpen={isOpenPostForm} 
+        <Modal isOpen={isOpenComentForm} 
         onClose={() => {
-            onCloseFormPost();
+            onCloseFormComment();
             setDataEdit?.({});
             reset({
-                title: '',
                 body: '',
             });
         }} size={'xl'}>
@@ -127,9 +120,9 @@ export default function ModalFormPostingan({
                         mx: 'auto',
                         fontSize: '22px',
                     }}>
-                        {dataEdit?.id ? 'Ubah Postingan' : 'Postingan Baru'}
+                        {dataEdit?.id ? 'Ubah Komentar' : 'Komentar Baru'}
                     </Text>
-                    <Button onClick={onCloseFormPost} variant='none'
+                    <Button onClick={onCloseFormComment} variant='none'
                         sx={{
                             color: 'black',
                             backgroundColor: 'transparent',
@@ -167,26 +160,10 @@ export default function ModalFormPostingan({
                                 <Box sx={{
                                     width: '100%',
                                 }}>
-                                    <FormControl mb={4} isInvalid={errors?.title ? true : false}>
-
-                                        <Input
-                                            {...register('title', { required: 'Judul postingan harus diisi' })}
-                                            placeholder="Judul Postingan"
-                                            sx={{
-                                                width: '100%',
-                                                border: 'none',
-                                                w: '100%',
-                                                bg: 'gray.100',
-                                                borderRadius: 12,
-                                            }} />
-                                        {
-                                            errors?.title && <FormErrorMessage>{errors?.title?.message}</FormErrorMessage>
-                                        }
-                                    </FormControl>
                                     <FormControl isInvalid={errors?.body ? true : false}>
                                         <Textarea
-                                            {...register('body', { required: 'Isi postingan harus diisi' })}
-                                            placeholder="Mulai menulis isi..."
+                                            {...register('body', { required: 'Komentar harus diisi' })}
+                                            placeholder="Mulai menulis komentar..."
                                             rows={6}
                                             sx={{
                                                 width: '100%',

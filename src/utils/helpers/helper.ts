@@ -16,3 +16,10 @@ export const buildUrl = ({ baseUrl, query }: QueryParams) => {
 export const avatarName = (name: string) => {
     return `https://ui-avatars.com/api/?name=${name}&color=7F9CF5&background=EBF4FF`
 }
+
+export const findMax = (data: any[], key = 'id') => {
+    const maxId = data.reduce((max, obj) => {
+        return obj.id > max ? obj?.[key] : max;
+      }, -Infinity);
+    return maxId;
+}
