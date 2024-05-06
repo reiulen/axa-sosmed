@@ -25,7 +25,7 @@ export const usePosts = create<ListPostsState>()(
             getPosts: async (userId: number) => {
                 set({ loading: true });
                 try {
-                    if (get().posts.length > 0) {
+                    if (get().posts.filter((post) => post.userId === userId).length > 0){
                         set({ loading: false });
                         return;
                     }
