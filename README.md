@@ -1,14 +1,13 @@
 # Axa Mandiri Frontend
 
 ### View Production
-
+https://axa-sosmed.vercel.app/
 
 ### Technologies
 Frontend
 - React JS Vite Typescipt : Library Framework
 - Zustand : State Management
 - Chakra UI : UI framework
-- React Query : Management Query API
 
 ## Instalation and Starting Local Server
 
