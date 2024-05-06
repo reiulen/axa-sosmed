@@ -47,7 +47,7 @@ export const useDetailPost = create<getDetailPostState>()(
             }
         }),
         {
-            name: "list-posts-store",
+            name: "detail-posts-store",
             storage: createJSONStorage(() => localStorage),
         }
     )
